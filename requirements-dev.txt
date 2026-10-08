@@ -1,0 +1,5 @@
+-r local_ddos_lab/requirements.txt
+-r rls/requirements.txt
+-r deploy/requirements.txt
+httpx==0.28.1
+h2==4.3.0

@@ -1,0 +1,9 @@
+.venv
+.git
+**/__pycache__
+**/*.pyc
+local_ddos_lab/runtime
+local_ddos_lab/results
+local_ddos_lab/examples
+artifacts
+.env

@@ -1,0 +1,11 @@
+services:
+  lab:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./runtime:/app/runtime
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 64
+    restart: "no"

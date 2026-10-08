@@ -1,0 +1,370 @@
+[
+  {
+    "offset_s": 0.05,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "warmup",
+    "product_id": 1,
+    "request_id": "b2ea5048224a27734191b1ec"
+  },
+  {
+    "offset_s": 0.3,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "warmup",
+    "product_id": 8,
+    "request_id": "22e5bfc910aae7352696187e"
+  },
+  {
+    "offset_s": 0.55,
+    "label": "normal",
+    "kind": "products",
+    "phase": "warmup",
+    "product_id": 4,
+    "request_id": "aed4200ad10fd9d2b56b309f"
+  },
+  {
+    "offset_s": 0.8,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "warmup",
+    "product_id": 18,
+    "request_id": "ad9305a4794ade39a8bcce61"
+  },
+  {
+    "offset_s": 1.05,
+    "label": "normal",
+    "kind": "products",
+    "phase": "warmup",
+    "product_id": 14,
+    "request_id": "b1a6e39bd3648a4621c290a6"
+  },
+  {
+    "offset_s": 1.25,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 2,
+    "request_id": "10dcf88b1c3d0972a5db716e"
+  },
+  {
+    "offset_s": 1.3,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 3,
+    "request_id": "3dd954d18cc8b0e80e4cdd62"
+  },
+  {
+    "offset_s": 1.416667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 8,
+    "request_id": "813a6bd9bddd0de6fb60208d"
+  },
+  {
+    "offset_s": 1.55,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 17,
+    "request_id": "1f3d24c33481368f529a70d3"
+  },
+  {
+    "offset_s": 1.583333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 10,
+    "request_id": "8f4469bb18e27b950840b9d7"
+  },
+  {
+    "offset_s": 1.75,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 3,
+    "request_id": "bf025a676133d8bfd44744b5"
+  },
+  {
+    "offset_s": 1.8,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 18,
+    "request_id": "058dfcdc974e344d014d0763"
+  },
+  {
+    "offset_s": 1.916667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 8,
+    "request_id": "9ec1386d1b36b23196edbfd5"
+  },
+  {
+    "offset_s": 2.05,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 18,
+    "request_id": "5e709ff56c71b92f8cab7487"
+  },
+  {
+    "offset_s": 2.083333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 4,
+    "request_id": "b291d947697f2ebabc77d462"
+  },
+  {
+    "offset_s": 2.25,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 13,
+    "request_id": "680f8dfad86548300e615077"
+  },
+  {
+    "offset_s": 2.3,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 15,
+    "request_id": "97215c96416338bb731971f3"
+  },
+  {
+    "offset_s": 2.416667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 9,
+    "request_id": "9832b0120f33637ad4fe4b62"
+  },
+  {
+    "offset_s": 2.55,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 1,
+    "request_id": "b0b43fe5becbcf7c1776d482"
+  },
+  {
+    "offset_s": 2.583333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 15,
+    "request_id": "1d990d944e47427c170d380e"
+  },
+  {
+    "offset_s": 2.75,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 12,
+    "request_id": "61f399dafa03ee4dfdb34a5a"
+  },
+  {
+    "offset_s": 2.8,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 6,
+    "request_id": "81a1519de4267a280044d0e3"
+  },
+  {
+    "offset_s": 2.916667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 6,
+    "request_id": "b82be94ce92dd0a9979e2c17"
+  },
+  {
+    "offset_s": 3.05,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 11,
+    "request_id": "fb5032b281a5d836ca2fc8f3"
+  },
+  {
+    "offset_s": 3.083333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 12,
+    "request_id": "bd9a2a7e51604871722220fd"
+  },
+  {
+    "offset_s": 3.25,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 12,
+    "request_id": "361e22c7351eadc69bd6a908"
+  },
+  {
+    "offset_s": 3.3,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 7,
+    "request_id": "7bf97622ecfaab39991b85bb"
+  },
+  {
+    "offset_s": 3.416667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 7,
+    "request_id": "b7aca185068fe2aaa68ce531"
+  },
+  {
+    "offset_s": 3.55,
+    "label": "normal",
+    "kind": "report",
+    "phase": "load",
+    "product_id": 11,
+    "request_id": "047d7a0f74120e3bdd15c042"
+  },
+  {
+    "offset_s": 3.583333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 9,
+    "request_id": "2ae08b376ffd9743bab0e02a"
+  },
+  {
+    "offset_s": 3.75,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 3,
+    "request_id": "8e9ade270bb219fd18c5afc5"
+  },
+  {
+    "offset_s": 3.8,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 13,
+    "request_id": "113e3543af62953083393a74"
+  },
+  {
+    "offset_s": 3.916667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 20,
+    "request_id": "34255f521ac23a71e6b5eae6"
+  },
+  {
+    "offset_s": 4.05,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 12,
+    "request_id": "6fa2c2e2882bcf83a6afa553"
+  },
+  {
+    "offset_s": 4.083333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 6,
+    "request_id": "6f5a2c9f828a75d267b187da"
+  },
+  {
+    "offset_s": 4.25,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 18,
+    "request_id": "f1d37ad79e9cc19892041c86"
+  },
+  {
+    "offset_s": 4.3,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 2,
+    "request_id": "046379b4cbf4263ed6853579"
+  },
+  {
+    "offset_s": 4.416667,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 8,
+    "request_id": "8a56dc1d187ee9dc7b00ba12"
+  },
+  {
+    "offset_s": 4.55,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 18,
+    "request_id": "32debcea359f5cb1fb466e86"
+  },
+  {
+    "offset_s": 4.583333,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 6,
+    "request_id": "7c346e941ad81915cfd964c9"
+  },
+  {
+    "offset_s": 4.75,
+    "label": "pressure",
+    "kind": "orders",
+    "phase": "load",
+    "product_id": 15,
+    "request_id": "dcaffe8a995dea3c264ea6a8"
+  },
+  {
+    "offset_s": 4.8,
+    "label": "normal",
+    "kind": "products",
+    "phase": "load",
+    "product_id": 13,
+    "request_id": "edd689267198ae94238c2de9"
+  },
+  {
+    "offset_s": 5.05,
+    "label": "normal",
+    "kind": "products",
+    "phase": "recovery",
+    "product_id": 10,
+    "request_id": "bc004af7363eb61ad609e341"
+  },
+  {
+    "offset_s": 5.3,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "recovery",
+    "product_id": 20,
+    "request_id": "226079a90499ea46aefaab7e"
+  },
+  {
+    "offset_s": 5.55,
+    "label": "normal",
+    "kind": "orders",
+    "phase": "recovery",
+    "product_id": 12,
+    "request_id": "468ce2e7eeb91796f3b69aeb"
+  },
+  {
+    "offset_s": 5.8,
+    "label": "normal",
+    "kind": "products",
+    "phase": "recovery",
+    "product_id": 3,
+    "request_id": "770724dae0c043ede2ee7264"
+  }
+]

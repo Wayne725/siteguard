@@ -1,0 +1,133 @@
+name: data-security-lab
+
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: lab
+    command: ["postgres", "-c", "max_connections=32", "-c", "shared_buffers=128MB", "-c", "statement_timeout=1500", "-c", "lock_timeout=1000"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [lab]
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 128
+    shm_size: 128m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d lab"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    stop_grace_period: 30s
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.app
+    user: "${LAB_UID:-1000}:${LAB_GID:-1000}"
+    environment:
+      APP_DATABASE_URL: postgresql://lab:lab@postgres:5432/lab
+      APP_RUNTIME_DIR: /app/runtime
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./local_ddos_lab/runtime:/app/runtime
+    networks: [lab, edge]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    cpus: 1.0
+    mem_limit: 512m
+    pids_limit: 64
+    read_only: true
+    tmpfs: ["/tmp:size=32m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    stop_grace_period: 30s
+    restart: "no"
+
+  rls:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.rls
+    user: "${LAB_UID:-1000}:${LAB_GID:-1000}"
+    environment:
+      RLS_MODE: ${RLS_MODE:-bypass}
+      RLS_PRODUCTS_RATE: ${RLS_PRODUCTS_RATE:-12}
+      RLS_ORDERS_RATE: ${RLS_ORDERS_RATE:-8}
+      RLS_REPORT_RATE: ${RLS_REPORT_RATE:-2}
+      RLS_PRODUCTS_BURST: ${RLS_PRODUCTS_BURST:-12}
+      RLS_ORDERS_BURST: ${RLS_ORDERS_BURST:-8}
+      RLS_REPORT_BURST: ${RLS_REPORT_BURST:-2}
+      RLS_BIND: 0.0.0.0:50051
+      LAB_ORIGIN_URL: http://app:8000
+      LAB_ADMIN_TOKEN_FILE: /app/runtime/admin.token
+    volumes:
+      - ./local_ddos_lab/runtime:/app/runtime:ro
+    networks: [lab]
+    depends_on:
+      app:
+        condition: service_healthy
+    cpus: 0.5
+    mem_limit: 192m
+    pids_limit: 32
+    read_only: true
+    tmpfs: ["/tmp:size=16m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; socket.create_connection(('127.0.0.1', 50051), timeout=2).close()"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    stop_grace_period: 10s
+    restart: "no"
+
+  envoy:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.envoy
+    command: ["envoy", "-c", "/etc/envoy/envoy.yaml", "--concurrency", "1", "--log-level", "warn"]
+    volumes:
+      - ./deploy/envoy/${ENVOY_MODE:-off}.yaml:/etc/envoy/envoy.yaml:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:9901:9901"
+    networks: [lab, edge]
+    depends_on:
+      app:
+        condition: service_healthy
+      rls:
+        condition: service_healthy
+    cpus: 0.5
+    mem_limit: 256m
+    pids_limit: 64
+    read_only: true
+    tmpfs: ["/tmp:size=16m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--max-time", "2", "http://127.0.0.1:9901/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    stop_grace_period: 30s
+    restart: "no"
+
+networks:
+  lab:
+    internal: true
+  edge:
+    driver: bridge
+
+volumes:
+  postgres_data:

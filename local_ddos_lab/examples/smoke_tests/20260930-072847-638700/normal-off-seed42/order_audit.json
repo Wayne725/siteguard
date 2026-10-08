@@ -1,0 +1,18 @@
+{
+  "committed_order_ids": [
+    "04167db0f20e9cca713804db",
+    "0878015dc1e27b0f706f6d70",
+    "33aba6c104d13d7995b1b988",
+    "6a62960ff7aaa38e18861a00",
+    "85d2d0379c76be1cd090e158",
+    "86c7e61384b2c05c3e58c6d5",
+    "99a629f2f217307892c34e15",
+    "b5d6e7c71017cde349178de6",
+    "b6d691f7fb551cfc47cd992a",
+    "ee08e8b7bc909bd4f663c71c"
+  ],
+  "stock_used": 10,
+  "acknowledged_missing_in_db": [],
+  "committed_without_successful_ack": [],
+  "stock_matches_orders": true
+}

@@ -1,0 +1,187 @@
+admin:
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 9901
+static_resources:
+  listeners:
+  - name: lab_gateway
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 8080
+    per_connection_buffer_limit_bytes: 65536
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          '@type': type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: lab_gateway
+          codec_type: AUTO
+          normalize_path: true
+          merge_slashes: true
+          path_with_escaped_slashes_action: REJECT_REQUEST
+          max_request_headers_kb: 32
+          request_timeout: 6s
+          stream_idle_timeout: 6s
+          common_http_protocol_options:
+            idle_timeout: 15s
+          route_config:
+            name: lab_routes
+            request_headers_to_remove:
+            - x-lab-admin
+            response_headers_to_add:
+            - header:
+                key: X-Lab-Gateway-Mode
+                value: rls
+              append_action: OVERWRITE_IF_EXISTS_OR_ADD
+            virtual_hosts:
+            - name: lab
+              domains:
+              - '*'
+              routes:
+              - match:
+                  path: /health
+                route:
+                  cluster: app
+                  timeout: 5s
+              - match:
+                  path: /live
+                route:
+                  cluster: app
+                  timeout: 5s
+              - match:
+                  path: /
+                route:
+                  cluster: app
+                  timeout: 5s
+              - match:
+                  path: /ui.js
+                route:
+                  cluster: app
+                  timeout: 5s
+              - match:
+                  path: /api/products
+                route:
+                  cluster: app
+                  timeout: 5s
+                  rate_limits:
+                  - actions:
+                    - generic_key:
+                        descriptor_key: kind
+                        descriptor_value: products
+              - match:
+                  path: /api/orders
+                route:
+                  cluster: app
+                  timeout: 5s
+                  rate_limits:
+                  - actions:
+                    - generic_key:
+                        descriptor_key: kind
+                        descriptor_value: orders
+              - match:
+                  path: /api/report
+                route:
+                  cluster: app
+                  timeout: 5s
+                  rate_limits:
+                  - actions:
+                    - generic_key:
+                        descriptor_key: kind
+                        descriptor_value: report
+              - match:
+                  prefix: /
+                direct_response:
+                  status: 404
+                  body:
+                    inline_string: 'not exposed by the lab gateway
+
+                      '
+          http_filters:
+          - name: envoy.filters.http.health_check
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.filters.http.health_check.v3.HealthCheck
+              pass_through_mode: true
+              headers:
+              - name: :path
+                string_match:
+                  safe_regex:
+                    regex: ^/(health|live)$
+          - name: envoy.filters.http.buffer
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+              max_request_bytes: 16384
+          - name: envoy.filters.http.ratelimit
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
+              domain: local-ddos-lab
+              timeout: 0.1s
+              failure_mode_deny: true
+              status_on_error:
+                code: ServiceUnavailable
+              rate_limit_service:
+                transport_api_version: V3
+                grpc_service:
+                  envoy_grpc:
+                    cluster_name: rls
+          - name: envoy.filters.http.router
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+          access_log:
+          - name: envoy.access_loggers.stdout
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+              log_format:
+                json_format:
+                  time: '%START_TIME%'
+                  method: '%REQ(:METHOD)%'
+                  path: '%REQ(:PATH)%'
+                  status: '%RESPONSE_CODE%'
+                  duration_ms: '%DURATION%'
+                  flags: '%RESPONSE_FLAGS%'
+                  details: '%RESPONSE_CODE_DETAILS%'
+  clusters:
+  - name: app
+    type: STRICT_DNS
+    connect_timeout: 1s
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: app
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: app
+                port_value: 8000
+    circuit_breakers:
+      thresholds:
+      - max_connections: 64
+        max_pending_requests: 24
+        max_requests: 64
+        max_retries: 0
+  - name: rls
+    type: STRICT_DNS
+    connect_timeout: 1s
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: rls
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: rls
+                port_value: 50051
+    circuit_breakers:
+      thresholds:
+      - max_connections: 64
+        max_pending_requests: 24
+        max_requests: 64
+        max_retries: 0
+    typed_extension_protocol_options:
+      envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+        '@type': type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+        explicit_http_config:
+          http2_protocol_options: {}

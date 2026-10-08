@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>應用層資源防護實驗</title>
+<style>
+body{font:16px/1.7 system-ui,sans-serif;background:#f5f5f1;color:#202824;max-width:850px;margin:40px auto;padding:0 24px}h1{line-height:1.3}section{background:white;border:1px solid #d7ded8;padding:20px;margin:18px 0}button,input{font:inherit;padding:7px 12px}button{cursor:pointer;background:#174d3b;color:white;border:0}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;font-size:13px}small{color:#56625c}label{display:inline-block;margin-right:12px}
+</style>
+<h1>應用層資源防護實驗</h1>
+<p>三個真實資料庫操作，用來觀察正常交易與報表工作競爭資源。只使用合成資料。</p>
+<small>本頁單次操作不會啟動負載測試。實驗期間請勿操作，以免混入比較資料。</small>
+<section><h2>目前狀態</h2><p id="status" role="status">讀取狀態中…</p><button id="refresh">重新檢查狀態</button><small> 僅在初次開啟或按下按鈕時查詢，不會持續輪詢。</small></section>
+<section><h2>商品瀏覽</h2><button id="products">讀取商品</button><pre id="products_result">尚未查詢</pre></section>
+<section><h2>建立測試訂單</h2><label>商品編號 <input id="product_id" type="number" min="1" max="20" value="1"></label><button id="orders" disabled>下單</button><button id="new_run_order" hidden>已確認：開始新實驗的訂單</button><p id="order_status" role="status">結果不確定時，保留原商品與訂單鍵重試；確認成功後才會建立新一筆。</p><pre id="orders_result">尚未下單</pre></section>
+<section><h2>銷售報表</h2><p>對合成銷售資料執行多次 SQL 聚合。</p><button id="report">查詢報表</button><pre id="report_result">尚未查詢</pre></section>
+<p>結果比較使用實驗工具產生的離線報告。防護模式與測試重設由本機管理工具操作。</p>
+<script src="/ui.js"></script>
+</html>
